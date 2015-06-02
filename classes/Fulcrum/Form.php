@@ -208,7 +208,14 @@ class Form
         $arrMap = $this->getKeyMap();
         foreach ($arrFields as $key => $value) {
             if (isset($arrMap[$key])) {
-                $arrReturn[$arrMap[$key]["key"]] = $value;
+                switch ($arrMap[$key]["meta"]->type) {
+                    case "ChoiceField":
+                        $arrReturn[$arrMap[$key]["key"]] = ["choice_values" => [$value]];
+
+                        break;
+                    default:
+                        $arrReturn[$arrMap[$key]["key"]] = $value;
+                }
             }
         }
 

@@ -223,6 +223,38 @@ class API
     }
 
     /**
+     * Test if a record has been updated remotely since a specific Datetime.
+     *
+     * @param string $strRecordId The unique Fulcrum id for the record
+     * @param DateTime $dtUpdated The DateTime to check against
+     * @return boolean
+     */
+    public function recordHasRemoteUpdate($strRecordId, $dtUpdated)
+    {
+        $blnReturn = false;
+
+        $strGet = "/records/{$strRecordId}";
+
+        $this->objRest = new RestRequest(
+            $this->apiUrl . $strGet,
+            "GET",
+            array(),
+            $this->getHeaders()
+        );
+        $this->objRest->execute();
+        $this->parseResponse();
+
+        if (is_object($this->response)) {
+            $objStdRecord = $this->response->record;
+
+            $dtRemoteUpdated = new \DateTime($objStdRecord->updated_at);
+            $blnReturn = ($dtRemoteUpdated > $dtUpdated);
+        }
+
+        return $blnReturn;
+    }
+
+    /**
      * Create a single record.
      *
      * @param  array           $arrSettings The settings used for the new record

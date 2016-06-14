@@ -346,6 +346,13 @@ class API
             $objForm = $this->getForm($objStdRecord->form_id);
 
             $objReturn = new Record($objStdRecord, $objForm);
+        } else {
+            $message = 'Fulcrum API call insertRecord failed';
+            if (is_object($this->response) && property_exists($this->response, 'record')) {
+                $message .= ' with the following error: ' . print_r($this->response->record, true);
+            }
+
+            throw new FulcrumException($message, E_ERROR);
         }
 
         return $objReturn;

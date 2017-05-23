@@ -11,8 +11,8 @@ namespace Fulcrum;
 class API
 {
     private $apiKey;
-    private $apiUrl = "http://api.fulcrumapp.com/api/v2";
-    private $photoUrl = "http://web.fulcrumapp.com/api/v2";
+    private $apiUrl = "https://api.fulcrumapp.com/api/v2";
+    private $photoUrl = "https://web.fulcrumapp.com/api/v2";
     private $objRest;
     private $response;
     private $responseStatus;
